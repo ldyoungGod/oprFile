@@ -5,22 +5,42 @@ CFileOperate::CFileOperate()
 
 }
 
-bool CFileOperate::writeFileText(const std::string src, const std::string path)
+bool CFileOperate::writeFileText(const std::string src, const std::string path, OptType type)
 {
     std::ofstream outfile;
-    outfile.open(path,std::ios::out|std::ios::trunc);
-    if(!outfile)
+    switch (type)
+    {
+    case OptType::AppendEnd:
+        outfile.open(path,std::ios::out|std::ios::app);
+        break;
+    case OptType::Rewrite:
+        outfile.open(path,std::ios::out|std::ios::trunc);
+        break;
+    default:
+        return false;
+    }
+    if(!outfile.is_open())
         return false;
     outfile.write(src.c_str(),src.length());
     outfile.close();
     return true;
 }
 
-bool CFileOperate::writeFileText(const char *pSrc, size_t len, const char *path)
+bool CFileOperate::writeFileBinary(const char *pSrc, size_t len, const char *path, OptType type)
 {
     std::ofstream outfile;
-    outfile.open(path,std::ios::out|std::ios::trunc);
-    if(!outfile)
+    switch (type)
+    {
+    case OptType::AppendEnd:
+        outfile.open(path,std::ios::out|std::ios::app|std::ios::binary);
+        break;
+    case OptType::Rewrite:
+        outfile.open(path,std::ios::out|std::ios::trunc|std::ios::binary);
+        break;
+    default:
+        return false;
+    }
+    if(!outfile.is_open())
         return false;
     outfile.write(pSrc,len);
     outfile.close();
@@ -43,22 +63,11 @@ std::string CFileOperate::readFileText(const std::string path)
     return strRet;
 }
 
-bool CFileOperate::writeFileBinary(const byte *src, size_t len, const char *path)
-{
-    std::ofstream outfile;
-    outfile.open(path,std::ios::out|std::ios::trunc|std::ios::binary);
-    if(!outfile)
-        return false;
-    outfile.write((char*)src,len);
-    outfile.close();
-    return true;
-}
-
 size_t CFileOperate::readFileBinary(const char *path, char *outStr)
 {
     std::ifstream infile;
     infile.open(path,std::ios::in);
-    if(!infile)
+    if(!infile.is_open())
         return -1;
     infile.seekg(0,std::ios_base::end);
     size_t totalLen = infile.tellg();
