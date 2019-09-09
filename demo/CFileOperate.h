@@ -10,11 +10,11 @@ class CFileOperate
 public:
     CFileOperate();
 
-    bool writeFileText(std::string src, std::string path);
+    bool writeFileText(const std::string src, const std::string path);
     bool writeFileText(const char* pSrc, size_t len, const char* path);
-    bool writeFileBinary(byte* src, size_t len, const char* path);
+    bool writeFileBinary(const byte* src, size_t len, const char* path);
 
-    std::string readFileText(std::string path);
+    std::string readFileText(const std::string path);
     size_t readFileBinary(const char* path, char* outStr);//outStr==nullptr : get binary file size
 };
 

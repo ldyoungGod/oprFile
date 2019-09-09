@@ -5,7 +5,7 @@ CFileOperate::CFileOperate()
 
 }
 
-bool CFileOperate::writeFileText(std::string src, std::string path)
+bool CFileOperate::writeFileText(const std::string src, const std::string path)
 {
     std::ofstream outfile;
     outfile.open(path,std::ios::out|std::ios::trunc);
@@ -27,7 +27,7 @@ bool CFileOperate::writeFileText(const char *pSrc, size_t len, const char *path)
     return true;
 }
 
-std::string CFileOperate::readFileText(std::string path)
+std::string CFileOperate::readFileText(const std::string path)
 {
     std::string strRet = "";
     size_t len = this->readFileBinary(path.c_str(),nullptr);
@@ -43,7 +43,7 @@ std::string CFileOperate::readFileText(std::string path)
     return strRet;
 }
 
-bool CFileOperate::writeFileBinary(byte *src, size_t len, const char *path)
+bool CFileOperate::writeFileBinary(const byte *src, size_t len, const char *path)
 {
     std::ofstream outfile;
     outfile.open(path,std::ios::out|std::ios::trunc|std::ios::binary);
