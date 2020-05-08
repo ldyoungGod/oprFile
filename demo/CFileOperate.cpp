@@ -66,7 +66,7 @@ std::string CFileOperate::readFileText(const std::string path)
 size_t CFileOperate::readFileBinary(const char *path, char *outStr)
 {
     std::ifstream infile;
-    infile.open(path,std::ios::in);
+    infile.open(path,std::ios::in|std::ios::binary);
     if(!infile.is_open())
         return -1;
     infile.seekg(0,std::ios_base::end);
